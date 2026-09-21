@@ -27,7 +27,6 @@ const formattedDate = new Intl.DateTimeFormat("en-NZ", {
   title={`${entry.data.title} — Coding Diary`}
   description={entry.data.summary}>
   <main class="wrap">
-    <article class="diary-entry">
       <a class="back-link" href="/website-astro/#diary">Back to the diary</a>
 
       <header class="diary-entry-header">
@@ -39,6 +38,5 @@ const formattedDate = new Intl.DateTimeFormat("en-NZ", {
       <div class="prose">
         <Content />
       </div>
-    </article>
   </main>
 </BaseLayout>
