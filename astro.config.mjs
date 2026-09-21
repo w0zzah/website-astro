@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://w0zzah.github.io",
-  base: '/astro-website',
+  base: '/website-astro',
   vite: {
     // @ts-ignore
     plugins: [tailwindcss()],
