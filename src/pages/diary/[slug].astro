@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("diary");
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+type Props = { entry: CollectionEntry<"diary"> };
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const formattedDate = new Intl.DateTimeFormat("en-NZ", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+}).format(entry.data.date);
+---
+
+<BaseLayout
+  title={`${entry.data.title} — Coding Diary`}
+  description={entry.data.summary}>
+  <main class="wrap">
+    <article class="diary-entry">
+      <a class="back-link" href="/#diary">Back to the diary</a>
+
+      <header class="diary-entry-header">
+        <time datetime={entry.data.date.toISOString()}>{formattedDate}</time>
+        <h1>{entry.data.title}</h1>
+        {entry.data.summary && <p class="lede">{entry.data.summary}</p>}
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+  </main>
+</BaseLayout>
