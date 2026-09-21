@@ -63,7 +63,7 @@ This set things in motion as I used string formatting to pass in the values requ
 
 But I still didn't know how to check if it was successful. So, it was back to Claudino for the finishing touches.
 ```java
-    return statement.executeUpdate() > 0;
+    return statement.executeUpdate() > 0;
 ```
 ## Step 4: Checking the Database
 
@@ -102,4 +102,7 @@ public User authenticateUser(String username, String password) {
 		 }
 	 }
 ```
+
+## Mistakes + Hindsight
+
 After feeling good for being the first group to implement a remote database, I was on sky 9. However that drastically changed when I found out about what a ".env" file was :/ Next time I would **NOT** commit private/hidden information to the remote repo, and analyse the required database schema before trying to create tables for it. 
