@@ -55,7 +55,7 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth !important;
   }
 
   body {
@@ -114,7 +114,7 @@
     font-size: clamp(38px, 6vw, 58px);
     font-family: var(--font-display);
     text-align: center;
-    margin-top: 5em;
+    margin: 2em;
   }
 
   .wrap {
@@ -122,7 +122,6 @@
     margin: 0 auto;
     padding: clamp(1.5rem, 5vw, 5em);
     border-inline: 0.01em solid var(--text);
-    min-height: 100%;
   }
 
   section {
@@ -210,18 +209,16 @@
   }
 
   .cta-row {
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background-color: var(--background);
+    position: sticky;
     display: flex;
-    flex-wrap: wrap;
+    padding: 30px;
     justify-content: center;
     gap: clamp(1.5rem, 8vw, 6rem);
-    margin-block: 1em;
-  }
-
-  .downArrow {
-    display: inline-block;
-    animation: pulse 1s linear infinite alternate;
-    font-size: 0.7em;
-    text-align: center;
+    font-family: var(--font-display);
   }
 
   .contact-details {
@@ -341,28 +338,11 @@
   }
 }
 
-/* ============================================================
-   6. Motion
-   ============================================================ */
-
-@keyframes pulse {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(20px);
-    color: var(--accents);
-    text-shadow: 0 0 20px var(--accents);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
   }
-  .downArrow {
-    animation: none;
-  }
+
   *,
   *::before,
   *::after {
