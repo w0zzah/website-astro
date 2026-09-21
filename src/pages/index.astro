@@ -1,17 +1,212 @@
 ---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
+const entries = (await getCollection("diary")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const dateFormat = new Intl.DateTimeFormat("en-NZ", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+const roles = [
+  {
+    title: "Alpino Cucina e Vino — Bar Manager",
+    years: "2020–2023",
+    blurb:
+      "Often ran a 200–350 cover night, making both on- and off-menu cocktails. Maintained stock and assisted with bar-related finance. Developed key hospitality skills including customer service and working under pressure.",
+  },
+  {
+    title: "Pegasus Bay Winery",
+    years: "2023–2024",
+    blurb:
+      "Branched out from bartending to learn more about wine and how it's made. Worked in the vineyard harvesting, bottling, and selling a collection of elegant wines.",
+  },
+  {
+    title: "Charity Fundraiser — World Vision",
+    years: "2024–2025",
+    blurb:
+      "Door-to-door charity fundraiser working in Melbourne, the Gold Coast, and Brisbane. Strict KPIs targeted towards creating growth led to a driven mentality.",
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Conrad Wilson — Software Engineer">
+  <header class="hero">
+    <h1>In pursuit of <i>Knowledge</i></h1>
+
+    <div class="flex justify-center gap-6">
+      <a
+        class="git-button"
+        href="https://github.com/w0zzah"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub profile"></a>
+      <a
+        class="linkedin-button"
+        href="https://www.linkedin.com/in/conrad-wilsonn/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn profile"></a>
+    </div>
+
+    <nav class="cta-row" aria-label="Page sections">
+      <a class="downArrow" href="#about">About<br />↓</a>
+      <a class="downArrow" href="#experience">Experience<br />↓</a>
+      <a class="downArrow" href="#diary">Coding Diary<br />↓</a>
+      <a class="downArrow" href="#contact">Contact<br />↓</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="About" id="about">
+        <h2>About</h2>
+
+        <div class="grid gap-[clamp(36px,5vw,72px)] md:grid-cols-[1.3fr_1fr]">
+          <div>
+            <h3>General Info</h3>
+            <p class="mb-[18px] text-[clamp(17px,2.2vw,20px)] leading-[1.55]">
+              Hello! I'm Conrad Wilson, a software engineering student at the
+              University of Canterbury, studying with the intent to develop and
+              expand my current skills.
+            </p>
+            <p class="mb-[18px]">
+              I chose software engineering because the rapidly changing
+              environment keeps me active and evolving. I love the challenge of
+              learning something new, and that has led me from making games in
+              Godot to learning about raycasting in C.
+            </p>
+            <p class="mb-[18px]">
+              Through school and work I have taken on leadership positions such
+              as joint bar manager and hockey coach. Those opportunities gave me
+              the chance to learn more about working within a team, and how it
+              feels to manage one.
+            </p>
+            <p class="mb-[18px]">
+              I'm drawn to work that lets me grow and develop my skills further,
+              preferably with real impact and benefit. Outside of study, I spend
+              most of my time at the gym or playing video games.
+            </p>
+
+            <a class="btn" href="/Conrad-Wilson-CV.pdf" download>Download PDF</a>
+          </div>
+
+          <div class="toolkit-grid">
+            <div>
+              <h3>Coding Languages</h3>
+              <ul class="skill-list">
+                <li>HTML &amp; CSS<span class="tag">3+ years</span></li>
+                <li>Python &amp; Java<span class="tag">2 years</span></li>
+                <li>
+                  C, SQL, JavaScript<span class="tag">Less than a year</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>Conceptual Programming</h3>
+              <ul class="skill-list">
+                <li>Networking<span class="tag">In progress</span></li>
+                <li>Full-stack development<span class="tag">Learning</span></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>Applied</h3>
+              <ul class="skill-list">
+                <li>Team collaboration<span class="tag">Strong</span></li>
+                <li>
+                  Client &amp; customer communication<span class="tag"
+                    >Strong</span
+                  >
+                </li>
+                <li>
+                  Working at pace, under pressure<span class="tag">Strong</span>
+                </li>
+                <li>Multitasking<span class="tag">Strong</span></li>
+                <li>Self-motivation<span class="tag">Strong</span></li>
+                <li>Resilience<span class="tag">Strong</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="Experience" id="experience">
+        <h2>Experience</h2>
+
+        <div class="grid gap-[clamp(36px,5vw,72px)] md:grid-cols-[1.3fr_1fr]">
+          <div>
+            <h3>Work Experience</h3>
+            <ul class="skill-list">
+              {
+                roles.map((role) => (
+                  <li class="role">
+                    <span class="role-head">
+                      {role.title}
+                      <span class="tag">{role.years}</span>
+                    </span>
+                    <p class="mt-[10px] max-w-[60ch] text-[clamp(15px,1.8vw,17px)] leading-[1.55] text-muted">
+                      {role.blurb}
+                    </p>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div>
+            <h3>Last Project</h3>
+            <p class="mb-[18px]">
+              SENG201 project built using Java, JavaFX and fx-css in IntelliJ.
+            </p>
+            <a class="btn" href="/nun-but-blood.zip" download>Download game</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="diary" id="diary">
+        <h2>Coding Diary</h2>
+        <p class="diary-intro">
+          Notes from what I'm building and breaking as I go.
+        </p>
+
+        {
+          entries.length === 0 ? (
+            <p class="text-muted">
+              First entry is on its way. Add a <code>.md</code> file to{" "}
+              <code>src/content/diary/</code> and it shows up here.
+            </p>
+          ) : (
+            <ul class="diary-list">
+              {entries.map((entry) => (
+                <li>
+                  <a class="diary-link" href={`/diary/${entry.id}/`}>
+                    <time datetime={entry.data.date.toISOString()}>
+                      {dateFormat.format(entry.data.date)}
+                    </time>
+                    <h3>{entry.data.title}</h3>
+                    {entry.data.summary && <p class="text-muted">{entry.data.summary}</p>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </section>
+
+      <section class="contact" id="contact">
+        <h2>Reach out anytime</h2>
+        <h3 class="contact-details">
+          <a href="mailto:conradwilsonn@gmail.com">conradwilsonn@gmail.com</a>
+          <span aria-hidden="true">|</span>
+          <a href="tel:+64204836895">+64 20 483 6895</a>
+        </h3>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

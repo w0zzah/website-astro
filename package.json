@@ -1,20 +1,16 @@
 {
-  "name": "website-astro",
+  "name": "conrad-wilson-portfolio",
   "type": "module",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
-  },
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "check": "astro check"
   },
   "dependencies": {
-    "astro": "^7.3.3"
-  },
-  "allowScripts": {
-    "esbuild": true
+    "@tailwindcss/vite": "^4.0.0",
+    "astro": "^5.0.0",
+    "tailwindcss": "^4.0.0"
   }
 }

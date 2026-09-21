@@ -1,0 +1,372 @@
+@import "tailwindcss";
+
+/* ============================================================
+   1. Palette
+   Light is the default in :root so a browser reporting no
+   preference still gets a usable page; dark overrides it.
+   ============================================================ */
+
+:root {
+  --background: #e8e7e7;
+  --secondary: rgba(22, 48, 43, 0.322);
+  --lightsecondary: #5c5c5c;
+  --accents: rgba(88, 25, 0, 0.794);
+  --text: #191a1a;
+  --ln-image: url("public/lnLight.png");
+  --git-image: url("public/gitLight.svg");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #191a1a;
+    --secondary: rgba(22, 48, 43, 0.2);
+    --lightsecondary: #a8a8a8;
+    --accents: rgb(189, 179, 153);
+    --text: #e8e7e7;
+    --ln-image: url("public/lnDark.png");
+    --git-image: url("public/gitDark.svg");
+  }
+}
+
+/* ============================================================
+   2. Tailwind theme
+   `@theme inline` maps your variables onto Tailwind tokens, so
+   bg-background / text-ink / border-muted / text-accent all work
+   AND still flip with the colour scheme. Without `inline`,
+   Tailwind would bake in the light values at build time.
+   ============================================================ */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-ink: var(--text);
+  --color-muted: var(--lightsecondary);
+  --color-accent: var(--accents);
+  --color-secondary: var(--secondary);
+
+  --font-display: "Cinzel", Georgia, serif;
+  --font-body: "Barlow", system-ui, sans-serif;
+  --font-mono: "Inconsolata", ui-monospace, monospace;
+}
+
+/* ============================================================
+   3. Base — element-level styles.
+   In @layer base so any utility class in the markup outranks it.
+   ============================================================ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 400;
+  }
+
+  h1 {
+    font-size: clamp(10px, 6vw, 5em);
+  }
+
+  h2 {
+    font-size: clamp(18px, 6vw, 25px);
+    text-align: center;
+    border-bottom: 1px solid var(--lightsecondary);
+    font-weight: 500;
+  }
+
+  h3 {
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+  }
+
+  p {
+    font-size: 1em;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+  }
+
+  a {
+    display: inline-flex;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accents);
+    outline-offset: 3px;
+  }
+}
+
+/* ============================================================
+   4. Components — your named classes.
+   @layer components sits below utilities, so `mb-[18px]` in the
+   markup beats a margin set here. This is the whole reason the
+   file is layered.
+   ============================================================ */
+
+@layer components {
+  .hero {
+    font-size: clamp(38px, 6vw, 58px);
+    font-family: var(--font-display);
+    text-align: center;
+    margin-top: 5em;
+  }
+
+  .wrap {
+    max-width: 60em;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 5vw, 5em);
+    border-inline: 0.01em solid var(--text);
+    min-height: 100%;
+  }
+
+  section {
+    padding-block: 76px;
+    border-bottom: 1px solid var(--lightsecondary);
+  }
+
+  section:last-of-type {
+    border-bottom: 0;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    padding: 12px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    border: 1px solid var(--text);
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    border-color: var(--accents);
+    color: var(--accents);
+  }
+
+  .linkedin-button,
+  .git-button {
+    width: 1em;
+    height: 1em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .linkedin-button {
+    background-image: var(--ln-image);
+  }
+
+  .git-button {
+    background-image: var(--git-image);
+  }
+
+  /* Replaces the old bare `.grid` rule, which clashed with
+     Tailwind's `.grid` utility. Layout now lives in the markup. */
+  .toolkit-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .skill-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .skill-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.7em 0;
+  }
+
+  .skill-list .tag {
+    font-size: 0.8em;
+    color: var(--accents);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  /* Experience entries: the blurb sits under the role, not beside it */
+  .role {
+    display: block;
+    padding: 0.7em 0;
+  }
+
+  .role-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(1.5rem, 8vw, 6rem);
+    margin-block: 1em;
+  }
+
+  .downArrow {
+    display: inline-block;
+    animation: pulse 1s linear infinite alternate;
+    font-size: 0.7em;
+    text-align: center;
+  }
+
+  .contact-details {
+    font-size: 1.3em;
+    padding-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   5. Coding diary
+   ============================================================ */
+
+@layer components {
+  .diary-intro {
+    max-width: 60ch;
+    margin-bottom: 1.5rem;
+  }
+
+  .diary-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .diary-link {
+    display: block;
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--lightsecondary);
+    font-weight: 400;
+  }
+
+  .diary-link:hover,
+  .diary-link:focus-visible {
+    border-color: var(--accents);
+  }
+
+  .diary-link time,
+  .diary-entry-header time {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--lightsecondary);
+  }
+
+  .diary-link h3 {
+    display: block;
+    margin: 0.25rem 0 0.4rem;
+    font-size: 1.15rem;
+  }
+
+  .diary-link p {
+    margin: 0;
+    max-width: 65ch;
+  }
+
+  .diary-entry {
+    max-width: 68ch;
+    margin-inline: auto;
+    padding-block: clamp(2rem, 6vw, 5rem);
+  }
+
+  .back-link {
+    margin-bottom: 2rem;
+    font-family: var(--font-mono);
+  }
+
+  .diary-entry-header h1 {
+    margin: 0.25rem 0 0.5rem;
+    font-size: clamp(28px, 5vw, 44px);
+    font-family: var(--font-display);
+  }
+
+  .lede {
+    color: var(--lightsecondary);
+    font-size: 1.1rem;
+  }
+
+  .prose {
+    line-height: 1.65;
+  }
+
+  .prose > * + * {
+    margin-top: 1.1em;
+  }
+
+  .prose h2 {
+    margin-top: 2em;
+    text-align: left;
+    border-bottom: 0;
+  }
+
+  .prose ul {
+    list-style: disc;
+    padding-left: 1.4em;
+  }
+
+  .prose pre {
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    border: 1px solid var(--lightsecondary);
+  }
+
+  .prose code {
+    font-family: var(--font-mono);
+  }
+
+  .prose img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ============================================================
+   6. Motion
+   ============================================================ */
+
+@keyframes pulse {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(20px);
+    color: var(--accents);
+    text-shadow: 0 0 20px var(--accents);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .downArrow {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
